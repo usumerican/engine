@@ -6,5 +6,6 @@ tmp/
 zig-*/
 
 !.editorconfig
+!.github/
 !.gitignore
 !.prettierrc.json
