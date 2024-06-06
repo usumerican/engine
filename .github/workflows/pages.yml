@@ -31,6 +31,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up Zig
+        uses: goto-bus-stop/setup-zig@v2.2.0
+        with:
+          version: 0.12.0
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -38,7 +42,9 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
-      - name: Build
+      - name: Build wasm
+        run: npm run zig:wasm
+      - name: Build pages
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v5
