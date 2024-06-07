@@ -1,13 +1,13 @@
 {
   "name": "engine",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "type": "module",
   "scripts": {
+    "zig:test": "zig test src/wasm.zig",
     "zig:build": "zig build --verbose --summary all --release=fast",
     "zig:run": "zig build run --release=fast",
-    "zig:exe": "zig build -Dtarget=x86_64-windows -Dcpu=x86_64_v3 -Dstrip=true --verbose --summary all --release=fast",
-    "zig:wasm": "zig build wasm --verbose --summary all --release=small",
+    "zig:wasm": "zig build wasm --prefix dist --verbose --summary all --release=small",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",

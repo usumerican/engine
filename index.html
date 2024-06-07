@@ -4,10 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
     <title>engine</title>
+    <link rel="stylesheet" href="web/index.css" />
     <script type="module" src="web/index.js"></script>
   </head>
-  <body>
-    <h1>engine</h1>
+  <body id="app">
     <pre id="responseOutput"></pre>
+    <textarea id="requestInput"></textarea>
+    <div class="ToolBar">
+      <button id="runButton">Run</button>
+      <button id="terminateButton">Terminate</button>
+    </div>
   </body>
 </html>

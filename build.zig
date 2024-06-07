@@ -3,10 +3,11 @@ const std = @import("std");
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
+    const name = b.option([]const u8, "name", "File name") orelse "engine";
     const strip = b.option(bool, "strip", "Omit debug symbols");
 
     const exe = b.addExecutable(.{
-        .name = "engine",
+        .name = name,
         .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,
@@ -35,7 +36,7 @@ pub fn build(b: *std.Build) void {
     var wasm_features = std.Target.wasm.cpu.bleeding_edge.features;
     wasm_features.removeFeature(@intFromEnum(std.Target.wasm.Feature.tail_call)); // for safari
     const wasm = b.addExecutable(.{
-        .name = "engine",
+        .name = name,
         .root_source_file = b.path("src/wasm.zig"),
         .target = b.resolveTargetQuery(.{
             .cpu_arch = .wasm32,
