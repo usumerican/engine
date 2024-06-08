@@ -6,6 +6,7 @@ on:
       - "v*.*.*"
 
 permissions:
+  id-token: write
   contents: write
 
 jobs:
@@ -16,5 +17,3 @@ jobs:
         uses: actions/checkout@v4
       - name: Release
         uses: softprops/action-gh-release@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
