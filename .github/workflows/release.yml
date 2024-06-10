@@ -7,9 +7,14 @@ on:
 
 permissions:
   contents: write
+  id-token: write
+  pages: write
 
 jobs:
   release:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -33,3 +38,12 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/engine-${{ github.ref_name }}.zip
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'dist/pages'
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
