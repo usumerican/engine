@@ -53,7 +53,7 @@ export fn run(slice: Slice) Slice {
 }
 
 test "run" {
-    const request = "target";
+    const request = "usi";
     const request_slice = sliceAlloc(request.len);
     defer sliceFree(request_slice);
     @memcpy(request_slice.items(), request);

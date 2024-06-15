@@ -1,4 +1,4 @@
-import EngineWorker from './engine-worker.js?worker';
+import EngineWorker from './zshogi-worker.js?worker';
 
 export class EngineAsync {
   constructor() {

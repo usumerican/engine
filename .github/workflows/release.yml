@@ -33,11 +33,11 @@ jobs:
       - name: Build dist
         run:  ./build.sh
       - name: Zip
-        run: (cd dist; zip -r engine-${{ github.ref_name }}.zip bin lib pages)
+        run: (cd dist; zip -r zshogi-${{ github.ref_name }}.zip bin lib pages)
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/engine-${{ github.ref_name }}.zip
+          files: dist/zshogi-${{ github.ref_name }}.zip
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages

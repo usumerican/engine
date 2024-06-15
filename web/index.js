@@ -1,7 +1,6 @@
-import { EngineAsync } from './engine-async.js';
+import { EngineAsync } from './zshogi-async.js';
 
 onload = async () => {
-  console.log('engine');
   const engineAsync = new EngineAsync();
   const responseOutput = document.getElementById('responseOutput');
   const requestInput = document.getElementById('requestInput');
@@ -31,6 +30,4 @@ onload = async () => {
     appendResponseText('> terminate\n');
     engineAsync.terminate();
   };
-
-  await run('target');
 };

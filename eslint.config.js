@@ -1,9 +1,9 @@
-import eslintJs from '@eslint/js';
+import js from '@eslint/js';
 import globals from 'globals';
 
 export default [
-  { ignores: ['dist', 'docs'] },
-  eslintJs.configs.recommended,
+  { ignores: ['dist'] },
+  js.configs.recommended,
   {
     languageOptions: {
       globals: {

@@ -3,7 +3,7 @@ const std = @import("std");
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
-    const name = b.option([]const u8, "name", "File name") orelse "engine";
+    const name = b.option([]const u8, "name", "File name") orelse "zshogi";
     const strip = b.option(bool, "strip", "Omit debug symbols");
 
     const exe = b.addExecutable(.{
