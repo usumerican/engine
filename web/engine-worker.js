@@ -1,4 +1,4 @@
-import { initEngine } from './engine';
+import { Engine } from './engine';
 
 let engine;
 
@@ -6,7 +6,7 @@ self.onmessage = async (ev) => {
   const { id, request } = ev.data;
   try {
     if (!engine) {
-      engine = await initEngine();
+      engine = await Engine.init();
     }
     const response = engine.run(request);
     self.postMessage({ id, response });

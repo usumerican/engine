@@ -1,5 +1,70 @@
 import instatiate from '../dist/bin/engine.wasm?init';
 
+export class Engine {
+  constructor(memory, instance) {
+    this.memory = memory;
+    this.instance = instance;
+  }
+
+  static async init() {
+    const memory = new WebAssembly.Memory({ initial: 32, maximum: 40 });
+    const instance = await instatiate({ env: { memory, dateNow: () => BigInt(Date.now()) } });
+    return new Engine(memory, instance);
+  }
+
+  static encoder = new TextEncoder();
+  static decoder = new TextDecoder();
+
+  sliceAddr(slice) {
+    return this.instance.exports.sliceAddr(slice) >>> 0;
+  }
+
+  sliceLen(slice) {
+    return this.instance.exports.sliceLen(slice) >>> 0;
+  }
+
+  sliceEncode(str) {
+    const arr = Engine.encoder.encode(str);
+    const slice = this.instance.exports.sliceAlloc(arr.length);
+    const addr = this.sliceAddr(slice);
+    if (!addr) {
+      throw new Error('sliceEncode addr is null');
+    }
+    const len = this.sliceLen(slice);
+    if (len) {
+      new Uint8Array(this.memory.buffer, addr, len).set(arr);
+    }
+    return slice;
+  }
+
+  sliceDecode(slice) {
+    const addr = this.sliceAddr(slice);
+    if (!addr) {
+      throw new Error('sliceDecode addr is null');
+    }
+    const len = this.sliceLen(slice);
+    return len ? Engine.decoder.decode(new Uint8Array(this.memory.buffer, addr, len)) : '';
+  }
+
+  sliceFree(slice) {
+    this.instance.exports.sliceFree(slice);
+  }
+
+  run(request) {
+    const request_slice = this.sliceEncode(request);
+    try {
+      const response_slice = this.instance.exports.run(request_slice);
+      try {
+        return this.sliceDecode(response_slice);
+      } finally {
+        this.sliceFree(response_slice);
+      }
+    } finally {
+      this.sliceFree(request_slice);
+    }
+  }
+}
+
 export async function initEngine() {
   const memory = new WebAssembly.Memory({ initial: 32, maximum: 1024 });
   const instance = await instatiate({ env: { memory, dateNow: () => BigInt(Date.now()) } });
